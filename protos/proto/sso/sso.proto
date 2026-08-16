@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "github.com/ferty411/grpc-auth-service/protos/proto/sso;proto";
+
+service Auth {
+    rpc Register (RegisterRequest) returns (RegisterResponse);
+    rpc Login (LoginRequest) returns (LoginResponse);
+    rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
+}
+
+message RegisterRequest {
+    string email = 1; //Email of the user to register
+    string password = 2; //Password of the user to register
+}
+
+message RegisterResponse {
+    int64 user_id = 1; //ID of the registered user
+}
+
+message LoginRequest {
+    string email = 1; //Email of the user to login
+    string password = 2;
+    int32 app_id = 3; //ID of the app requesting login
+}
+
+message LoginResponse {
+    string token = 1; //JWT token for the logged-in user
+}
+
+
+message IsAdminRequest {
+    string user_id = 1; //ID of the user to check
+}
+
+message IsAdminResponse {
+    bool is_admin = 1; //True if the user is an admin, false otherwise
+}
