@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
+	"os/signal"
+	"sso/internal/app"
 	"sso/internal/config"
+	"syscall"
 )
 
 const (
@@ -28,9 +31,15 @@ func main() {
 	log.Debug("debug message")
 	log.Warn("warn message")
 	log.Error("error message")
-	//TODO: инициализировать приложение
 
-	//TODO: инициализировать grpc сервер
+	application := app.New(log, cfg.GRPC.Port, cfg.StoragePath, cfg.TokenTTL)
+	go application.GRPCServer.MustRun()
+
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)
+	<-stop
+	application.GRPCServer.Stop()
+	//TODO: инициализировать приложение
 
 }
 
