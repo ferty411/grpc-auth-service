@@ -1,8 +1,7 @@
 syntax = "proto3";
 
 package auth;
-
-option go_package = "github.com/ferty411/grpc-auth-service/protos/proto/sso;proto";
+option go_package = "github.com/ferty411/grpc-auth-service/protos/gen/go/sso;ssov1";
 
 service Auth {
     rpc Register (RegisterRequest) returns (RegisterResponse);
@@ -35,5 +34,5 @@ message IsAdminRequest {
 }
 
 message IsAdminResponse {
-    bool is_admin = 1; //True if the user is an admin, false otherwise
+    bool is_admin = 1;
 }

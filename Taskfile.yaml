@@ -1,0 +1,10 @@
+version: "3"
+
+tasks:
+  generate:
+    aliases:
+      - gen
+    description: "Generate gRPC proto files"
+    cmds: 
+      - mkdir -p protos/gen/go/sso
+      - protoc -I protos/proto --go_out=./protos/gen/go --go_opt=paths=source_relative --go-grpc_out=./protos/gen/go --go-grpc_opt=paths=source_relative protos/proto/sso/sso.proto
